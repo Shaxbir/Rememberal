@@ -1,55 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-<script type="module" src="js/app.js"></script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QuickList</title>
+  <meta name="description" content="Create shopping lists, check off items as you buy them, and get a reminder if you forget something.">
+  <title>QuickList – Priority Shopping List</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- Module scripts are deferred automatically; load once, in the head -->
   <script type="module" src="js/app.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   <header>
-    <h1>Priority Shopping List</h1>
+    <h1>QuickList <span class="subtitle">Priority Shopping List</span></h1>
   </header>
 
-  <main>
+  <main id="main">
+    <!-- Errors are announced to screen readers; hidden until JS fills them -->
     <p id="error-message" class="error hidden" role="alert"></p>
 
-    <section id="lists-panel">
-      <h2>My Lists</h2>
-      <ul id="list-tabs"></ul>
+    <section id="lists-panel" aria-labelledby="lists-heading">
+      <h2 id="lists-heading">My Lists</h2>
+      <nav aria-label="Your shopping lists">
+        <ul id="list-tabs"></ul>
+      </nav>
+
       <form id="new-list-form">
         <label for="new-list-name">New list name</label>
-        <input id="new-list-name" type="text" maxlength="50" autocomplete="off">
+        <input id="new-list-name" name="listName" type="text" maxlength="50"
+               autocomplete="off" required placeholder="e.g. Weekly groceries">
         <button type="submit">Create list</button>
       </form>
     </section>
 
-    <p id="empty-state" class="hidden">No list selected. Create a list to get started.</p>
+    <!-- Empty state: shown when no list exists or none is selected -->
+    <p id="empty-state" class="hidden" role="status">
+      No list selected. Create a list to get started.
+    </p>
 
-    <section id="active-list" class="hidden">
+    <section id="active-list" class="hidden" aria-labelledby="active-list-title">
       <div id="active-list-header">
         <h2 id="active-list-title"></h2>
-        <button id="rename-list-button" type="button">Rename</button>
-        <button id="delete-list-button" type="button">Delete</button>
+        <div class="list-actions">
+          <button id="rename-list-button" type="button">Rename</button>
+          <button id="delete-list-button" type="button">Delete</button>
+        </div>
       </div>
 
       <form id="add-item-form">
-        <label for="item-name">Item</label>
-        <input id="item-name" type="text" maxlength="50" autocomplete="off">
-        <label for="item-quantity">Quantity</label>
-        <input id="item-quantity" type="number" min="1" max="99" step="1" value="1">
-        <label for="item-category">Category</label>
-        <select id="item-category"></select>
-        <button type="submit">Add item</button>
+        <fieldset>
+          <legend>Add an item</legend>
+
+          <div class="field">
+            <label for="item-name">Item</label>
+            <input id="item-name" name="itemName" type="text" maxlength="50"
+                   autocomplete="off" required>
+          </div>
+
+          <div class="field">
+            <label for="item-quantity">Quantity</label>
+            <input id="item-quantity" name="quantity" type="number"
+                   min="1" max="99" step="1" value="1" inputmode="numeric" required>
+          </div>
+
+          <div class="field">
+            <label for="item-category">Category</label>
+            <select id="item-category" name="category"></select>
+          </div>
+
+          <button type="submit">Add item</button>
+        </fieldset>
       </form>
-      <ol id="item-list"></ol>
+
+      <!-- Empty-list indication for the selected list -->
+      <p id="empty-list-message" class="hidden" role="status">
+        This list is empty. Add your first item above.
+      </p>
+
+      <ol id="item-list" aria-label="Items on this list"></ol>
+
+      <!-- Announced when all items have been purchased -->
+      <p id="purchase-status" class="hidden" role="status" aria-live="polite">
+        All items have been purchased.
+      </p>
+
       <div id="list-footer">
-        <span id="progress"></span>
+        <span id="progress" aria-live="polite"></span>
         <button id="clear-purchased-button" type="button">Clear purchased</button>
+        <button id="all-done-button" type="button">All Done</button>
       </div>
     </section>
   </main>
+
+  <!-- Reminder shown when All Done is selected and items remain unpurchased -->
+  <dialog id="reminder-dialog" aria-labelledby="reminder-title" aria-describedby="reminder-intro">
+    <form method="dialog">
+      <h2 id="reminder-title">You may have forgotten something</h2>
+      <p id="reminder-intro">These items have not been purchased yet:</p>
+      <ul id="reminder-list"></ul>
+      <div class="dialog-actions">
+        <button id="return-button" type="submit" value="return" autofocus>Return to list</button>
+        <button id="finish-button" type="submit" value="finish">Finish anyway</button>
+      </div>
+    </form>
+  </dialog>
 </body>
 </html>
