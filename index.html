@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Create shopping lists, check off items as you buy them, and get a reminder if you forget something.">
   <title>QuickList – Priority Shopping List</title>
-  <link rel="stylesheet" href="styles.css">
-  <!-- Module scripts are deferred automatically; load once, in the head -->
-  <script type="module" src="js/app.js"></script>
+  <link rel="stylesheet" href="rememberal.css">
+  <script defer src="rememberal.js"></script>
 </head>
 <body>
+    <div class="app">
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <header>
-    <h1>QuickList <span class="subtitle">Priority Shopping List</span></h1>
+  <header class="toolbar">
+    <h1 class="menu">QuickList <span class="subtitle">Priority Shopping List</span></h1>
   </header>
 
   <main id="main">
@@ -32,6 +32,10 @@
                autocomplete="off" required placeholder="e.g. Weekly groceries">
         <button type="submit">Create list</button>
       </form>
+      <section class="rememberal-archive" aria-labelledby="archive-heading">
+        <h3 id="archive-heading">Archived Lists</h3>
+        <ul id="rememberal-archive-tabs"></ul>
+      </section>
     </section>
 
     <!-- Empty state: shown when no list exists or none is selected -->
@@ -47,6 +51,13 @@
           <button id="delete-list-button" type="button">Delete</button>
         </div>
       </div>
+      <div class="rememberal-actions" aria-label="List actions">
+        <button id="save-list-button" type="button">Save list</button>
+        <button id="archive-list-button" type="button">Archive</button>
+        <button id="reopen-list-button" type="button" class="hidden">Reopen list</button>
+        <button id="clear-all-button" type="button">Clear all items</button>
+      </div>
+      <p id="operation-status" class="rememberal-status" role="status" aria-live="polite"></p>
 
       <form id="add-item-form">
         <fieldset>
@@ -78,14 +89,19 @@
         This list is empty. Add your first item above.
       </p>
 
-      <ol id="item-list" aria-label="Items on this list"></ol>
+      <div class="columns" aria-hidden="true">
+        <span class="col-entry">Item</span>
+        <span class="col-qty">Quantity</span>
+        <span class="col-price">Category</span>
+      </div>
+      <ol id="item-list" class="list" aria-label="Items on this list"></ol>
 
       <!-- Announced when all items have been purchased -->
       <p id="purchase-status" class="hidden" role="status" aria-live="polite">
         All items have been purchased.
       </p>
 
-      <div id="list-footer">
+      <div id="list-footer" class="total">
         <span id="progress" aria-live="polite"></span>
         <button id="clear-purchased-button" type="button">Clear purchased</button>
         <button id="all-done-button" type="button">All Done</button>
@@ -105,5 +121,6 @@
       </div>
     </form>
   </dialog>
+  </div>
 </body>
 </html>

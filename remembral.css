@@ -86,3 +86,94 @@ body {
 }
 .total .label  { left: 365px; }
 .total .amount { left: 541px; }
+:root { --warn-bg: #fff0e0; --warn: #a14d08; }
+.hidden, [hidden] { display: none !important; }
+
+/* The original fixed height is allowed to grow for longer lists. */
+.app { height: auto; min-height: 775px; margin: 0 auto 24px; }
+.toolbar h1 { font-size: 24px; font-weight: 700; margin: 0; }
+.subtitle { font-size: 18px; font-weight: 400; margin-left: 10px; }
+.skip-link { position: absolute; top: -50px; left: 12px; z-index: 2; background: #fff; color: #000; padding: 8px; }
+.skip-link:focus { top: 4px; }
+#main { width: 100%; }
+
+/* List selection and controls were not present in the original wireframe. */
+#lists-panel, #active-list-header, #add-item-form,
+#operation-status, #error-message, #empty-state,
+#empty-list-message, #purchase-status { margin-left: 11px; width: 954px; max-width: calc(100% - 22px); }
+#lists-panel { border: 1px solid #000; padding: 12px 14px; }
+#lists-panel h2, #active-list-header h2 { font-size: 20px; margin: 0 0 8px; }
+#lists-panel h3 { font-size: 17px; margin: 8px 0; }
+#list-tabs, #rememberal-archive-tabs { display: flex; flex-wrap: wrap; gap: 7px; padding: 0; margin: 7px 0; list-style: none; }
+.rememberal-tab { margin: 0; }
+.rememberal-muted { color: #555; font-size: 15px; list-style: none; }
+.rememberal-archive { border-top: 1px solid #aaa; margin-top: 12px; padding-top: 8px; }
+.rememberal-tab-button { background: #fff; border: 1px solid #333; font: inherit; padding: 5px 9px; text-align: left; overflow-wrap: anywhere; }
+.rememberal-tab-button.selected { border-color: #ed7d31; border-width: 2px; }
+.rememberal-tab-button:hover { background: #fff4eb; }
+#new-list-form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; }
+#new-list-form label { font-size: 16px; }
+#new-list-form input { flex: 1 1 140px; min-width: 0; }
+
+#active-list-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 0 7px; }
+.list-actions, .rememberal-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.rememberal-actions { margin: 6px 0 8px 11px; }
+button, input, select { font: inherit; }
+button { cursor: pointer; border: 1px solid #000; background: #fff; color: #000; padding: 5px 9px; }
+button:hover:not(:disabled) { border-color: #ed7d31; background: #fff4eb; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #ed7d31; outline-offset: 2px; }
+input, select { border: 1px solid #666; padding: 5px; min-width: 0; }
+#error-message, #empty-state, #empty-list-message,
+#purchase-status, #operation-status { padding: 7px; margin-top: 7px; margin-bottom: 7px; }
+#error-message { border: 1px solid #a14d08; color: #a14d08; }
+#operation-status { color: #333; }
+
+#add-item-form fieldset { border: 1px solid #000; margin: 0; display: flex; flex-wrap: wrap; align-items: end; gap: 10px; padding: 10px 12px; }
+#add-item-form legend { padding: 0 5px; }
+#add-item-form .field { flex: 1 1 120px; }
+#add-item-form .field label { display: block; font-size: 16px; }
+#add-item-form .field input, #add-item-form .field select { display: block; width: 100%; }
+
+/* Original .columns, .list, .row, and .total remain responsible for
+   the main shopping list structure. Only extra controls are positioned. */
+.columns { margin-top: 14px; margin-left: 11px; }
+.list { list-style: none; overflow: visible; margin-top: 0; padding: 7px 0; min-height: 100px; flex: initial; }
+.row { height: 42px; border-bottom: 1px solid #ddd; }
+.row:last-child { border-bottom: 0; }
+.row input[type="checkbox"] { position: absolute; left: 11px; top: 10px; width: 17px; height: 17px; accent-color: #ed7d31; }
+.row .col-entry { left: 40px; top: 7px; width: 350px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.row .col-qty { top: 7px; }
+.row .col-price { top: 7px; right: 58px; max-width: 160px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.row .rememberal-remove { position: absolute; right: 9px; top: 4px; padding: 2px 6px; }
+.row.purchased .col-entry { text-decoration: line-through; color: #777; }
+.row.forgotten { background: #fff0e0; border-left: 4px solid #ed7d31; }
+.row.forgotten input[type="checkbox"] { left: 7px; }
+
+.total { min-height: 102px; height: auto; padding: 15px 12px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 10px; }
+#progress { margin-right: auto; }
+#all-done-button { border-color: #ed7d31; font-weight: bold; }
+#reminder-dialog { border: 2px solid #ed7d31; padding: 18px; width: min(440px, calc(100% - 26px)); }
+#reminder-dialog::backdrop { background: #0006; }
+.dialog-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Adapt the original fixed-width wireframe for smaller screens. */
+@media (max-width: 976px) {
+  .app { width: 100%; }
+  .toolbar { width: calc(100% - 22px); height: auto; min-height: 95px; margin-right: 11px; }
+  .columns, .list, .total { width: calc(100% - 22px); max-width: calc(100% - 22px); margin-left: 11px; }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .toolbar h1 { font-size: 20px; white-space: normal; }
+  .subtitle { display: block; margin-left: 0; }
+  .columns { display: none; }
+  .row { height: auto; min-height: 56px; padding: 6px 45px 7px 36px; display: flex; flex-wrap: wrap; gap: 3px 10px; align-items: center; }
+  .row input[type="checkbox"] { top: 15px; }
+  .row .col-entry, .row .col-qty, .row .col-price { position: static; display: inline-block; width: auto; max-width: 100%; white-space: normal; }
+  .row .col-entry { flex: 1 1 100%; }
+  .row .col-qty, .row .col-price { font-size: 14px; color: #555; }
+  .row .rememberal-remove { top: 11px; }
+  .list { min-height: 75px; }
+  .toolbar { min-height: 70px; }
+}
